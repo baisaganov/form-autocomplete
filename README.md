@@ -7,7 +7,7 @@
 Как установить:
 1. Скачать [Tampermonkey](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=ru)
 2. Дать разрешения и включить режим разработчика [Инструкция](https://www.tampermonkey.net/faq.php#Q209)
-3. Установить скрипт перейдя по ссылке [Установить скрипт](https://baisaganov.github.io/form-autocomplete/autofill.user.js)
+3. Установить скрипт перейдя по ссылке и нажав на кнопку "Установить" [Установить скрипт](https://baisaganov.github.io/form-autocomplete/autofill.user.js)
 
 Все обновления проверяются раз в сутки, если будут дополнения, выйдет уведомлении о необходимости обновления скрипта
 Приятного пользования!

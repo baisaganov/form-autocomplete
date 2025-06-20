@@ -5,8 +5,8 @@
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
-// @updateURL    https://baisaganov.github.io/docs/form-autocomplete/autofill.user.js
-// @downloadURL  https://baisaganov.github.io/docs/form-autocomplete/autofill.user.js
+// @updateURL    https://baisaganov.github.io/form-autocomplete/autofill.user.js
+// @downloadURL  https://baisaganov.github.io/form-autocomplete/autofill.user.js
 // ==/UserScript==
 
 (function () {

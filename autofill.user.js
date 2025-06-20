@@ -7,6 +7,7 @@
 // @grant        GM_registerMenuCommand
 // @updateURL    https://baisaganov.github.io/form-autocomplete/autofill.user.js
 // @downloadURL  https://baisaganov.github.io/form-autocomplete/autofill.user.js
+// @author       Alisher Baisaganov
 // ==/UserScript==
 
 (function () {

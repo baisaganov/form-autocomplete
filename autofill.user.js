@@ -67,11 +67,15 @@
 
             if (tag === 'select') {
                 const options = [...el.options].filter(opt => !opt.disabled && !opt.hidden);
-                if (options.length > 0) {
-                    const randomOption = options[Math.floor(Math.random() * options.length)];
+                const validOptions = options.filter(opt => opt.value.trim() !== '');
+
+                if (validOptions.length > 0) {
+                    const randomOption = validOptions[Math.floor(Math.random() * validOptions.length)];
                     el.value = randomOption.value;
+                    el.dispatchEvent(new Event('change', { bubbles: true })); // Важно для срабатывания реактивности
                 }
             }
+
         });
     }
 

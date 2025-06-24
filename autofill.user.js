@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Автозаполнение полей 1.4
 // @namespace    http://tampermonkey.net/
-// @version      1.4.2
+// @version      1.4.3
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -51,7 +51,6 @@
                 el.readOnly ||
                 el.disabled ||
                 classList.contains('datepicker-here')
-
             ) return;
 
             if (tag === 'input' || tag === 'textarea') {
@@ -78,9 +77,9 @@
                 } else if (type === 'phone' || type === 'work_phone' || name === 'phone' || name === 'city_phone') {
                     el.value = '1234567890';
                 } else if (type === 'number') {
-                    el.value = '16';
+                    el.value = '${getRandomInt(1, 10000)}';
                 } else if ((type === 'text' || !type) && name === 'number') {
-                    el.value = '123456';
+                    el.value = '${getRandomInt(10000, 1000000)}';
                 } else if (type === 'text' || !type || tag === 'textarea') {
                     el.value = randomValue;
                 }

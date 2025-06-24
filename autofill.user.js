@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Автозаполнение полей 1.3
 // @namespace    http://tampermonkey.net/
-// @version      1.3.2
+// @version      1.3.4
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -57,9 +57,9 @@
                     name === 'facebook_url' ||
                     name === 'instagram_url' ||
                     name === 'gis_url') {
-                    el.value = 'https://example.com';
+                    el.value = `test${getRandomInt(1, 10000)}.kz`;
                 } else if (type === 'email' || name === 'email') {
-                    el.value = `user${getRandomInt(1, 10000)}@example.com`;
+                    el.value = `user${getRandomInt(1, 10000)}@test.kz`;
                 } else if (type === 'phone' || type === 'work_phone' || name === 'phone' || name === 'city_phone') {
                     el.value = '1234567890';
                 } else if (type === 'number') {

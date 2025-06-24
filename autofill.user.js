@@ -28,7 +28,8 @@
                 el.offsetParent === null ||
                 type === 'hidden' ||
                 type === 'file' ||
-                classList.contains('file-text')
+                classList.contains('file-text') ||
+                el.readOnly
             ) return;
 
             if (tag === 'input' || tag === 'textarea') {
@@ -50,11 +51,16 @@
                 }
 
                 const randomValue = `тест_${getRandomInt(1, 10000)}`;
-                if (type === 'link') {
+                if (type === 'link' ||
+                    name === 'website' ||
+                    name === 'linkedin_url' ||
+                    name === 'facebook_url' ||
+                    name === 'instagram_url' ||
+                    name === 'gis_url') {
                     el.value = 'https://example.com';
-                } else if (type === 'email') {
+                } else if (type === 'email' || name === 'email') {
                     el.value = `user${getRandomInt(1, 10000)}@example.com`;
-                } else if (type === 'phone' || type==='work_phone') {
+                } else if (type === 'phone' || type === 'work_phone' || name === 'phone' || name === 'city_phone') {
                     el.value = '1234567890';
                 } else if (type === 'number') {
                     el.value = '16';

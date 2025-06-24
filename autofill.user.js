@@ -77,7 +77,7 @@
                 } else if (type === 'phone' || type === 'work_phone' || name === 'phone' || name === 'city_phone') {
                     el.value = '1234567890';
                 } else if (type === 'number') {
-                    el.value = '${getRandomInt(1, 10000)}';
+                    el.value = getRandomInt(1, 10000);
                 } else if ((type === 'text' || !type) && name === 'number') {
                     el.value = '${getRandomInt(10000, 1000000)}';
                 } else if (type === 'text' || !type || tag === 'textarea') {

@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Автозаполнение полей 1.3
+// @name         Автозаполнение полей 1.4
 // @namespace    http://tampermonkey.net/
-// @version      1.3.6
+// @version      1.4
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -15,6 +15,25 @@
 
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function handleRadioGroups() {
+        const processedNames = new Set();
+
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            const name = radio.getAttribute('name');
+            if (!name || processedNames.has(name)) return;
+
+            const group = document.querySelectorAll(`input[type="radio"][name="${CSS.escape(name)}"]`);
+            const visibleGroup = Array.from(group).filter(r => r.offsetParent !== null && !r.disabled);
+            if (visibleGroup.length > 0) {
+                const randomRadio = visibleGroup[Math.floor(Math.random() * visibleGroup.length)];
+                randomRadio.checked = true;
+                randomRadio.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+
+            processedNames.add(name);
+        });
     }
 
     function autoFill() {
@@ -37,19 +56,12 @@
                 if (tag === 'textarea' && type === 'search') return;
 
                 if (type === 'checkbox') {
-                    el.checked = Math.random() < 0.5;
+                    el.checked = true;
+                    el.dispatchEvent(new Event('change', { bubbles: true }));
                     return;
                 }
 
-                if (type === 'radio') {
-                    const radios = document.querySelectorAll(`input[type="radio"][name="${CSS.escape(name)}"]`);
-                    const radioGroup = Array.from(radios).filter(r => r.offsetParent !== null && !r.disabled);
-                    if (radioGroup.length) {
-                        const randomRadio = radioGroup[Math.floor(Math.random() * radioGroup.length)];
-                        randomRadio.checked = true;
-                    }
-                    return;
-                }
+
 
                 const randomValue = `тест_${getRandomInt(1, 10000)}`;
                 if (type === 'link' ||
@@ -79,11 +91,12 @@
                 if (validOptions.length > 0) {
                     const randomOption = validOptions[Math.floor(Math.random() * validOptions.length)];
                     el.value = randomOption.value;
-                    el.dispatchEvent(new Event('change', { bubbles: true })); // Важно для срабатывания реактивности
+                    el.dispatchEvent(new Event('change', { bubbles: true }));
                 }
             }
-
         });
+
+        handleRadioGroups();
     }
 
     // Горячая клавиша: Ctrl+Shift+F
@@ -95,4 +108,3 @@
 
     GM_registerMenuCommand("🔄 Заполнить форму", autoFill);
 })();
-

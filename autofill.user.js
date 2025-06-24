@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Автозаполнение полей 1.4
 // @namespace    http://tampermonkey.net/
-// @version      1.4.1
+// @version      1.4.2
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -47,9 +47,11 @@
                 el.offsetParent === null ||
                 type === 'hidden' ||
                 type === 'file' ||
-                classList.contains('file-text', 'datepicker-here') ||
+                classList.contains('file-text') ||
                 el.readOnly ||
-                el.disabled
+                el.disabled ||
+                classList.contains('datepicker-here')
+
             ) return;
 
             if (tag === 'input' || tag === 'textarea') {

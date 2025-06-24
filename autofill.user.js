@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Автозаполнение полей 1.3
 // @namespace    http://tampermonkey.net/
-// @version      1.3.4
+// @version      1.3.5
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -71,7 +71,7 @@
                 }
             }
 
-            if (tag === 'select') {
+            if (tag === 'select' && class !== 'tagDetect') {
                 const options = [...el.options].filter(opt => !opt.disabled && !opt.hidden);
                 const validOptions = options.filter(opt => opt.value.trim() !== '');
 

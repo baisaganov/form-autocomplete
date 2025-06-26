@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Автозаполнение полей 1.4
+// @name         Автозаполнение полей 1.4.6
 // @namespace    http://tampermonkey.net/
-// @version      1.4.5
+// @version      1.4.6
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -54,6 +54,7 @@
                 classList.contains('defence_year') ||
                 el.id === 'code' ||
                 classList.contains('datepicker-max')
+                classList.contains('')
 
             ) return;
 
@@ -61,8 +62,14 @@
                 if (tag === 'textarea' && type === 'search') return;
 
                 if (type === 'checkbox') {
-                    el.checked = true;
-                    el.dispatchEvent(new Event('change', { bubbles: true }));
+                    if (el.offsetParent === null || getComputedStyle(el).display === 'none') {
+                        // клик по связанной метке
+                        const label = document.querySelector(`label[for="${el.id}"]`);
+                        if (label) label.click();
+                    } else {
+                        el.checked = true;
+                        el.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
                     return;
                 }
 

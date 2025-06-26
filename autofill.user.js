@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Автозаполнение полей 1.5
+// @name         Автозаполнение полей 1.5.1
 // @namespace    http://tampermonkey.net/
-// @version      1.5
+// @version      1.5.1
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -37,6 +37,12 @@
     }
 
     function autoFill() {
+        // 👉 Сначала переключаем свитчер по label
+        const toggleLabel = document.querySelector('label[for="toggle"].toggle-label');
+        if (toggleLabel) {
+            toggleLabel.click();
+        }
+
         document.querySelectorAll('input, textarea, select').forEach(el => {
             const tag = el.tagName.toLowerCase();
             const type = (el.getAttribute('type') || '').toLowerCase();
@@ -54,7 +60,6 @@
                 classList.contains('defence_year') ||
                 el.id === 'code' ||
                 classList.contains('datepicker-max')
-
             ) return;
 
             if (tag === 'input' || tag === 'textarea') {
@@ -62,7 +67,6 @@
 
                 if (type === 'checkbox') {
                     if (el.offsetParent === null || getComputedStyle(el).display === 'none') {
-                        // клик по связанной метке
                         const label = document.querySelector(`label[for="${el.id}"]`);
                         if (label) label.click();
                     } else {
@@ -71,8 +75,6 @@
                     }
                     return;
                 }
-
-
 
                 const randomValue = `тест_${getRandomInt(1, 10000)}`;
                 if (type === 'link' ||
@@ -89,9 +91,9 @@
                 } else if (type === 'number') {
                     el.value = getRandomInt(1, 10000);
                 } else if ((type === 'text' || !type)
-                && (name === 'number' ||
-                    name === 'work_experience_years' ||
-                    name === 'work_experience_months')) {
+                    && (name === 'number' ||
+                        name === 'work_experience_years' ||
+                        name === 'work_experience_months')) {
                     el.value = getRandomInt(10000, 1000000);
                 } else if (type === 'text' || !type || tag === 'textarea') {
                     el.value = randomValue;
@@ -113,7 +115,6 @@
         handleRadioGroups();
     }
 
-    // Горячая клавиша: Ctrl+Shift+F
     document.addEventListener('keydown', function (e) {
         if (e.ctrlKey && e.shiftKey && e.code === 'KeyF') {
             autoFill();

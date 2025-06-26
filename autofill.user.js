@@ -50,7 +50,11 @@
                 classList.contains('file-text') ||
                 el.readOnly ||
                 el.disabled ||
-                classList.contains('datepicker-here')
+                classList.contains('datepicker-here') ||
+                classList.contains('defence_year') ||
+                el.id === 'code' ||
+                classList.contains('datepicker-max')
+
             ) return;
 
             if (tag === 'input' || tag === 'textarea') {

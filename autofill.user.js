@@ -54,7 +54,6 @@
                 classList.contains('defence_year') ||
                 el.id === 'code' ||
                 classList.contains('datepicker-max')
-                classList.contains('')
 
             ) return;
 

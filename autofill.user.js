@@ -37,11 +37,10 @@
     }
 
     function autoFill() {
-        // 👉 Сначала переключаем свитчер по label
-        const toggleLabel = document.querySelector('label[for="toggle"].toggle-label');
-        if (toggleLabel) {
-            toggleLabel.click();
-        }
+        // свитчер
+        document.querySelectorAll('label.toggle-label').forEach(label => {
+            label.click();
+        });
 
         document.querySelectorAll('input, textarea, select').forEach(el => {
             const tag = el.tagName.toLowerCase();

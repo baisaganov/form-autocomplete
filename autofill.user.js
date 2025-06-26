@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Автозаполнение полей 1.5.2
+// @name         Автозаполнение полей 1.5.3
 // @namespace    http://tampermonkey.net/
-// @version      1.5.2
+// @version      1.5.3
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -83,9 +83,9 @@
                     name === 'instagram_url' ||
                     name === 'gis_url') {
                     el.value = `test${getRandomInt(1, 10000)}.kz`;
-                } else if (type === 'email' || name === 'email') {
+                } else if (type === 'email' || name === 'email' || name === 'heads_email') {
                     el.value = `user${getRandomInt(1, 10000)}@test.kz`;
-                } else if (type === 'phone' || type === 'work_phone' || name === 'phone' || name === 'city_phone') {
+                } else if (type === 'phone' || type === 'work_phone' || name === 'phone' || name === 'city_phone' || name === 'heads_mobile_phone') {
                     el.value = '1234567890';
                 } else if (type === 'number') {
                     el.value = getRandomInt(1, 10000);
@@ -96,6 +96,8 @@
                     el.value = getRandomInt(10000, 1000000);
                 } else if (type === 'text' || !type || tag === 'textarea') {
                     el.value = randomValue;
+                } else if (name === 'iin_heads') {
+                    el.value = getRandomInt(100000000000, 1000000000000);
                 }
             }
 

@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Автозаполнение полей 1.4.6
+// @name         Автозаполнение полей 1.4.8
 // @namespace    http://tampermonkey.net/
-// @version      1.4.6
+// @version      1.4.8
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -30,6 +30,7 @@
                 const randomRadio = visibleGroup[Math.floor(Math.random() * visibleGroup.length)];
                 randomRadio.checked = true;
                 randomRadio.dispatchEvent(new Event('change', { bubbles: true }));
+                setTimeout(autoFill, 100);
             }
 
             processedNames.add(name);
@@ -47,51 +48,60 @@
                 el.offsetParent === null ||
                 type === 'hidden' ||
                 type === 'file' ||
-                classList.contains('file-text') ||
                 el.readOnly ||
                 el.disabled ||
+                classList.contains('file-text') ||
                 classList.contains('datepicker-here') ||
                 classList.contains('defence_year') ||
-                el.id === 'code' ||
-                classList.contains('datepicker-max')
-
+                el.id === 'code'
             ) return;
 
             if (tag === 'input' || tag === 'textarea') {
                 if (tag === 'textarea' && type === 'search') return;
 
                 if (type === 'checkbox') {
-                    if (el.offsetParent === null || getComputedStyle(el).display === 'none') {
-                        // клик по связанной метке
-                        const label = document.querySelector(`label[for="${el.id}"]`);
-                        if (label) label.click();
+                    const isHidden = el.offsetParent === null || getComputedStyle(el).display === 'none';
+
+                    let label = document.querySelector(`label[for="${el.id}"]`);
+                    if (!label) {
+                        label = el.closest('.toggle-switch')?.querySelector('label');
+                    }
+
+                    if (isHidden && label) {
+                        label.click();
+                        setTimeout(autoFill, 100);
                     } else {
                         el.checked = true;
                         el.dispatchEvent(new Event('change', { bubbles: true }));
+                        setTimeout(autoFill, 100);
                     }
+
                     return;
                 }
 
-
-
                 const randomValue = `тест_${getRandomInt(1, 10000)}`;
-                if (type === 'link' ||
+                if (
+                    type === 'link' ||
                     name === 'website' ||
                     name === 'linkedin_url' ||
                     name === 'facebook_url' ||
                     name === 'instagram_url' ||
-                    name === 'gis_url') {
+                    name === 'gis_url'
+                ) {
                     el.value = `test${getRandomInt(1, 10000)}.kz`;
                 } else if (type === 'email' || name === 'email') {
                     el.value = `user${getRandomInt(1, 10000)}@test.kz`;
-                } else if (type === 'phone' || type === 'work_phone' || name === 'phone' || name === 'city_phone') {
+                } else if (
+                    type === 'phone' || type === 'work_phone' ||
+                    name === 'phone' || name === 'city_phone'
+                ) {
                     el.value = '1234567890';
                 } else if (type === 'number') {
                     el.value = getRandomInt(1, 10000);
-                } else if ((type === 'text' || !type)
-                && (name === 'number' ||
-                    name === 'work_experience_years' ||
-                    name === 'work_experience_months')) {
+                } else if (
+                    (type === 'text' || !type) &&
+                    (name === 'number' || name === 'work_experience_years' || name === 'work_experience_months')
+                ) {
                     el.value = getRandomInt(10000, 1000000);
                 } else if (type === 'text' || !type || tag === 'textarea') {
                     el.value = randomValue;
@@ -106,6 +116,7 @@
                     const randomOption = validOptions[Math.floor(Math.random() * validOptions.length)];
                     el.value = randomOption.value;
                     el.dispatchEvent(new Event('change', { bubbles: true }));
+                    setTimeout(autoFill, 100);
                 }
             }
         });
@@ -121,4 +132,14 @@
     });
 
     GM_registerMenuCommand("🔄 Заполнить форму", autoFill);
+
+    // MutationObserver — если DOM изменяется
+    const observer = new MutationObserver(() => {
+        autoFill();
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 })();

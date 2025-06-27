@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Автозаполнение полей 1.5.3
+// @name         Автозаполнение полей 1.5.4
 // @namespace    http://tampermonkey.net/
-// @version      1.5.3
+// @version      1.5.4
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -91,12 +91,13 @@
                     el.value = getRandomInt(1, 10000);
                 } else if ((type === 'text' || !type)
                     && (name === 'number' ||
+                        name ==='date_of_opening' ||
                         name === 'work_experience_years' ||
                         name === 'work_experience_months')) {
-                    el.value = getRandomInt(10000, 1000000);
+                    el.value = getRandomInt(1, 3000);
                 } else if (type === 'text' || !type || tag === 'textarea') {
                     el.value = randomValue;
-                } else if (name === 'iin_heads') {
+                } else if (name === 'iin_heads' || name === 'organizer_bin') {
                     el.value = getRandomInt(100000000000, 1000000000000);
                 }
             }

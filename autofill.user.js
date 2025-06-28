@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Автозаполнение полей 1.5.4
+// @name         Автозаполнение полей 1.5.5
 // @namespace    http://tampermonkey.net/
-// @version      1.5.4
+// @version      1.5.5
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand

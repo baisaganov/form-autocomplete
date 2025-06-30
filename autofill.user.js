@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Автозаполнение полей 1.5.5
+// @name         Автозаполнение полей 1.5.6
 // @namespace    http://tampermonkey.net/
-// @version      1.5.5
+// @version      1.5.6
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -57,6 +57,10 @@
                 el.disabled ||
                 classList.contains('datepicker-here') ||
                 classList.contains('defence_year') ||
+                classList.contains('admission_year') ||
+                classList.contains('graduation_day') ||
+                classList.contains('admission_year_1') ||
+                classList.contains('graduation_day_1') ||
                 el.id === 'code' ||
                 classList.contains('datepicker-max')
             ) return;
@@ -97,7 +101,7 @@
                     el.value = getRandomInt(1, 3000);
                 } else if (type === 'text' || !type || tag === 'textarea') {
                     el.value = randomValue;
-                } else if (name === 'iin_heads' || name === 'organizer_bin') {
+                } else if (name === 'iin_heads' || name === 'organizer_bin' || name.startsWith('iin') ) {
                     el.value = getRandomInt(100000000000, 1000000000000);
                 }
             }

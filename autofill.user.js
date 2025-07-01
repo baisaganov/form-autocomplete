@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Автозаполнение полей 1.5.6
+// @name         Автозаполнение полей 1.5.7
 // @namespace    http://tampermonkey.net/
-// @version      1.5.6
+// @version      1.5.7
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -61,7 +61,7 @@
                 classList.contains('graduation_day') ||
                 classList.contains('admission_year_1') ||
                 classList.contains('graduation_day_1') ||
-                el.className.startsWith('datepicker')
+                el.className.startsWith('datepicker') ||
                 el.id === 'code' ||
                 classList.contains('datepicker-max')
             ) return;

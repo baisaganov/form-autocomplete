@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Автозаполнение полей 1.5.9
+// @name         Автозаполнение полей 1.6.0
 // @namespace    http://tampermonkey.net/
-// @version      1.5.9
+// @version      1.6.0
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -98,6 +98,11 @@
                     el.value = '1234567890';
                 } else if (type === 'number') {
                     el.value = getRandomInt(1, 10000);
+                } else if (
+                    name.startsWith('admission_year') ||
+                    name.startsWith('graduation_day')
+                    ) {
+                    el.value = getRandomInt(2010, 2025);
                 } else if ((type === 'text' || !type)
                     && (name === 'number' ||
                         name ==='date_of_opening' ||

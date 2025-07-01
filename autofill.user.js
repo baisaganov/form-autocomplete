@@ -63,8 +63,20 @@
                 classList.contains('graduation_day_1') ||
                 el.className.startsWith('datepicker') ||
                 el.id === 'code' ||
-                classList.contains('datepicker-max')
+                classList.contains('datepicker-max') ||
+                classList.contains('readonly')
             ) return;
+
+            if (tag === 'select' && !el.classList.contains('tagDetect')) {
+                const options = [...el.options].filter(opt => !opt.disabled && !opt.hidden);
+                const validOptions = options.filter(opt => opt.value.trim() !== '');
+
+                if (validOptions.length > 0) {
+                    const randomOption = validOptions[Math.floor(Math.random() * validOptions.length)];
+                    el.value = randomOption.value;
+                    el.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            }
 
             if (tag === 'input' || tag === 'textarea') {
                 if (tag === 'textarea' && type === 'search') return;
@@ -107,16 +119,6 @@
                 }
             }
 
-            if (tag === 'select' && !el.classList.contains('tagDetect')) {
-                const options = [...el.options].filter(opt => !opt.disabled && !opt.hidden);
-                const validOptions = options.filter(opt => opt.value.trim() !== '');
-
-                if (validOptions.length > 0) {
-                    const randomOption = validOptions[Math.floor(Math.random() * validOptions.length)];
-                    el.value = randomOption.value;
-                    el.dispatchEvent(new Event('change', { bubbles: true }));
-                }
-            }
         });
 
         handleRadioGroups();

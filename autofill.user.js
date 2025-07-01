@@ -61,6 +61,7 @@
                 classList.contains('graduation_day') ||
                 classList.contains('admission_year_1') ||
                 classList.contains('graduation_day_1') ||
+                el.className.startsWith('datepicker')
                 el.id === 'code' ||
                 classList.contains('datepicker-max')
             ) return;

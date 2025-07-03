@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Автозаполнение полей 1.6.1
+// @name         Автозаполнение полей 1.6.2
 // @namespace    http://tampermonkey.net/
-// @version      1.6.1
+// @version      1.6.2
 // @description  Заполнение форм по Ctrl+Shift+F и через меню
 // @match        *://*/*
 // @grant        GM_registerMenuCommand
@@ -107,12 +107,12 @@
                         name === 'work_experience_years' ||
                         name === 'work_experience_months')) {
                     el.value = getRandomInt(1, 3000);
-                } else if (type === 'number') {
+                } else if (name === 'iin_heads' || name === 'organizer_bin' || name.startsWith('iin')) {
+                    el.value = getRandomInt(800000000000, 1000000000000);
+                }else if (type === 'number') {
                     el.value = getRandomInt(1, 10000);
                 }else if (type === 'text' || !type || tag === 'textarea') {
                     el.value = randomValue;
-                } else if (name === 'iin_heads' || name === 'organizer_bin' || name.startsWith('iin') ) {
-                    el.value = getRandomInt(100000000000, 1000000000000);
                 }
             }
 
